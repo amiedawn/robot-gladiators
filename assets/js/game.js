@@ -68,8 +68,12 @@ var fight = function (enemyName) {
       }
     }
   }    
-  //call the function with a for loop
-  for(var i = 0; i < enemyNames.length; i++) {
-    fight(enemyNames[i]); 
-  }
+  
 }  
+//call the function with a for loop
+for (var i = 0; i < enemyNames.length; i++) {
+  var pickedEnemyName = enemyNames[i];
+  enemyHealth = 50;
+  //call fight function with enemy robot
+  fight(pickedEnemyName);
+}
