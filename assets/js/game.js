@@ -12,7 +12,6 @@ var playerMoney = 10;
 var enemyNames = ["Roborto", "Amy Android", "Robo Trumble"]; //3 possible enemies
 var enemyHealth = 50;
 var enemyAttack = 12;
-
  
 var fight = function(enemyName) {
   // repeat and execute as long as the enemy robot is alive
@@ -26,15 +25,17 @@ var fight = function(enemyName) {
       if (confirmSkip) {
         window.alert(playerName + " has decided to skip this fight. Goodbye!");
         // subtract money from playerMoney for skipping
-        playerMoney = playerMoney - 10;
+        playerMoney = Math.max(0, playerMoney - 10);
         console.log("playerMoney", playerMoney);
         //exit loop when skip has been chosen
         break;
       }
     }  
         
-      // Remove enemy's health by subracting the amount set in the playerAttack variable
-      enemyHealth = enemyHealth - playerAttack;
+      // Generate random damage value based on player's attack power
+      var damage = randomNumber(playerAttack - 3, playerAttack);
+
+      enemyHealth = Math.max(0, enemyHealth - damage);
 
       // Log a resulting message to the console so we know that it worked.
       console.log(
@@ -55,7 +56,9 @@ var fight = function(enemyName) {
       }
 
       // Remove player's health by subtracting the amount set in the enemyAttack variable
-      playerHealth = playerHealth - enemyAttack;
+      var damage = randomNumber(enemyAttack - 3, enemyAttack);
+
+      playerHealth = Math.max(0, playerHealth - damage);
 
       // Log a resulting message to the console so we know that it worked.
       console.log(
@@ -90,7 +93,7 @@ var startGame = function() {
     var pickedEnemyName = enemyNames[i];
 
     //reset enemyHealth before starting new fight
-    enemyHealth = 50;
+    enemyHealth = randomNumber(40, 60);
 
     //use debugger to pause script from running and check what's going on at that moment in the code
     debugger;
@@ -157,7 +160,7 @@ var shop = function() {
 
         // increase health and decrease money
         playerHealth = playerHealth + 20;
-        playerMoney = playerMoney - 7;
+        playerMoney = Math.max(0, playerMoney - 10);
         break;
       }
       else {
@@ -172,7 +175,7 @@ var shop = function() {
 
         // increase attack and decrease money
         playerAttack = playerAttack + 6;
-        playerMoney = playerMoney - 7;
+        playerMoney = Math.max(0, playerMoney - 7);
       }
       else {
         window.alert("You don't have enough money!");
@@ -194,6 +197,13 @@ var shop = function() {
       break;
   }
 }
+
+//function to generate a random numeric value
+var randomNumber = function(min, max) {
+  var value = Math.floor(Math.random() * (max - min + 1) + min);
+
+  return value;
+};
 
 //start the game when the page loads
 startGame();
